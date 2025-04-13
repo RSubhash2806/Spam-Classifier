@@ -1,0 +1,24 @@
+import pandas as pd
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.pipeline import make_pipeline
+import pickle
+
+# Sample dataset (replace this with your own dataset if available)
+data = {
+    "text": ["Free money", "Call now", "Hi, how are you?", "Let's meet at 5", "Win cash prizes!"],
+    "label": [1, 1, 0, 0, 1]  # 1 = spam, 0 = ham
+}
+df = pd.DataFrame(data)
+
+# Create model pipeline
+model = make_pipeline(CountVectorizer(), MultinomialNB())
+
+# Train the model
+model.fit(df["text"], df["label"])
+
+# Save to model.pkl
+with open("model.pkl", "wb") as f:
+    pickle.dump(model, f)
+
+print("✅ Model trained and saved as model.pkl")
